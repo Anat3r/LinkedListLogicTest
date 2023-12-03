@@ -5,8 +5,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <StartupObject>LinkedListLogicTest.Program</StartupObject>
-    <ApplicationIcon>app.png</ApplicationIcon>
+    <StartupObject></StartupObject>
+    <ApplicationIcon>app.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="app.png" />
+    <Content Include="app.ico" />
   </ItemGroup>
 
 </Project>
