@@ -257,12 +257,6 @@ namespace LinkedListLogicTest
             myCats.add_cat(blackcat, 1);
             Console.WriteLine(myCats.get_lenght());
             Console.WriteLine(myCats.get_cat(0).Color);
-            Console.WriteLine(myCats.get_cat(1).Color);
-            Cat[] cat_arr = myCats.get_array();
-            foreach(Cat cat in cat_arr)
-            {
-                Console.WriteLine(cat.Color);
-            }
         }
     }
 }
