@@ -138,8 +138,8 @@ namespace LinkedListLogicTest
 
         public void add_cat(Cat cat, int catid)
         {
-            Box box = new Box(cat);
             if (catid < 0 || catid > lenght) { throw new ArgumentOutOfRangeException(null, "Element id is out of the list range: [0; " + Convert.ToString(lenght - 1) + "]"); }
+            Box box = new Box(cat);
             if (lenght == 0)
             {
                 StartBox = box;
@@ -257,6 +257,8 @@ namespace LinkedListLogicTest
             myCats.add_cat(blackcat, 1);
             Console.WriteLine(myCats.get_lenght());
             Console.WriteLine(myCats.get_cat(0).Color);
+            Cat[] cat_arr = myCats.get_array();
+            foreach(Cat cat in cat_arr) Console.Write(cat.Color + ", ");
         }
     }
 }
