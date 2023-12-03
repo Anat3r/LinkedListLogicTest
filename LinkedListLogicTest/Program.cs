@@ -1,4 +1,6 @@
-﻿namespace LinkedListTest
+﻿using System;
+
+namespace LinkedListLogicTest
 {
     class Cat
     {
@@ -26,7 +28,15 @@
         {
             private Box? LastBox;
             private Box? NextBox;
-            public Cat CatinBx;
+            private Cat CatinBx;
+
+
+            public void clear_box()
+            {
+                CatinBx = null;
+                LastBox = null;
+                NextBox = null;
+            }
 
             public Box(Cat catinbx, Box lastBox, Box nextBox)
             {
@@ -47,17 +57,20 @@
                 NextBox = null;
             }
 
-            public Box get_last()
+
+            public ref  Box get_last()
             {
                 if (LastBox == null) { throw new NullReferenceException("Object you are trying to get does not exist"); }
-                else { return LastBox; }
+                else { return ref LastBox; }
             }
             public void set_last(Box box) { LastBox = box; }
-            public Box get_next()
+            public ref Box get_next()
             {
                 if (NextBox == null) { throw new NullReferenceException("Object you are trying to get does not exist"); }
-                else { return NextBox; }
+                else { return ref NextBox; }
             }
+
+            public ref Cat get_cat() { return ref CatinBx; }
             public void set_next(Box box) { NextBox = box; }
 
         }
@@ -85,7 +98,7 @@
         }
 
 
-        private Box get_box(int boxid)
+        private  Box get_box(int boxid)
         {
             if (boxid < 0 || boxid >= lenght) { throw new ArgumentOutOfRangeException(null, "Element id is out of the list range: [0; " + Convert.ToString(lenght - 1) + "]"); }
             int mid = (int)Math.Floor((double)(lenght / 2));
@@ -118,9 +131,10 @@
         }
         public Cat get_cat(int id)
         {
-            return get_box(id).CatinBx;
+            return get_box(id).get_cat();
         }
         public int get_lenght() { return lenght; }
+
 
         public void add_cat(Cat cat, int catid)
         {
@@ -158,15 +172,35 @@
             }
             lenght++;
         }
+
+
+        public Cat[] get_array()
+        {
+            if (lenght == 0) { return []; }
+            Cat[] cat_arr = new Cat[lenght];
+            ref Box box =ref StartBox;
+            for (int i = 0; i < lenght ; ++i)
+            {
+                if (i == 0) 
+                {
+                    cat_arr[i] = box.get_cat();
+                    continue;
+                }
+                if (box.get_cat() == null) { }
+                box = box.get_next();
+                cat_arr[i] = box.get_cat();
+            }
+            return cat_arr;
+        }
+
+
         private void remove_box(int boxid)
         {
             if (boxid < 0 || boxid > lenght) { throw new ArgumentOutOfRangeException(null, "Element id is out of the list range: [0; " + Convert.ToString(lenght - 1) + "]"); }
             Box box = get_box(boxid);
-            box.CatinBx = null;
             if (lenght == 1)
             {
-                StartBox = null;
-                EndBox = null;
+                box.clear_box();
                 lenght = 0;
                 return;
             }
@@ -187,8 +221,7 @@
                 nextbox.set_last(prewbox);
                 prewbox.set_next(nextbox);
             }
-            box.set_next(null);
-            box.set_last(null);
+            box.clear_box();
             lenght--;
 
         }
@@ -220,17 +253,16 @@
             myCats.remove_cat(0);
             myCats.remove_cat(0);
             myCats.add_cat(yellowcat, 0);
+            myCats.add_cat(whitecat, 1);
+            myCats.add_cat(blackcat, 1);
+            Console.WriteLine(myCats.get_lenght());
             Console.WriteLine(myCats.get_cat(0).Color);
-        }
-    }
-}
-namespace LinkedListLogicTest
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine(myCats.get_cat(1).Color);
+            Cat[] cat_arr = myCats.get_array();
+            foreach(Cat cat in cat_arr)
+            {
+                Console.WriteLine(cat.Color);
+            }
         }
     }
 }
